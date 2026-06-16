@@ -1,0 +1,34 @@
+<view class="container">
+  <!-- Filter Bar -->
+  <view style="display:flex;gap:16rpx;margin-bottom:28rpx;">
+    <view class="btn {{filter === 'all' ? 'btn-sage' : ''}}" bindtap="setFilter" data-filter="all" style="padding:10rpx 24rpx;font-size:24rpx;">全部</view>
+    <view class="btn {{filter === 'jsonl' ? 'btn-sage' : ''}}" bindtap="setFilter" data-filter="jsonl" style="padding:10rpx 24rpx;font-size:24rpx;">◇ AI对话</view>
+    <view class="btn {{filter === 'voice' || filter === 'text' ? 'btn-sage' : ''}}" bindtap="setFilter" data-filter="self" style="padding:10rpx 24rpx;font-size:24rpx;">↳ 自记</view>
+  </view>
+
+  <!-- Stats -->
+  <view style="display:flex;gap:20rpx;margin-bottom:28rpx;font-size:24rpx;color:var(--ink-soft);">
+    <text>{{filteredFragments.length}} 条碎片</text>
+    <text wx:if="{{filteredFragments.length > 0}}">{{uniqueDates.length}} 天</text>
+  </view>
+
+  <!-- Grouped Timeline -->
+  <view wx:for="{{groupedFragments}}" wx:key="date">
+    <view style="font-size:24rpx;color:var(--sage);font-weight:600;padding:24rpx 0 12rpx;border-bottom:1rpx solid var(--border);">
+      {{item.date}} · {{item.count}} 条
+    </view>
+    <view wx:for="{{item.fragments}}" wx:for-item="frag" wx:key="id" class="tl-item">
+      <view class="tl-dot {{frag.source === 'jsonl' ? 'ai' : 'self'}}"></view>
+      <view class="tl-body">{{frag.content}}</view>
+      <view class="tl-time">{{frag.timestamp ? frag.timestamp.slice(11,16) : ''}}</view>
+      <view class="tl-play" wx:if="{{frag.source === 'voice' && frag.audioPath}}" bindtap="playVoice" data-path="{{frag.audioPath}}">▶</view>
+    </view>
+  </view>
+
+  <!-- Empty -->
+  <view class="empty" wx:if="{{filteredFragments.length === 0}}">
+    <view class="icon">◇</view>
+    <view class="main">还没有碎片</view>
+    <view class="sub">碎片汇入后会出现在这里</view>
+  </view>
+</view>

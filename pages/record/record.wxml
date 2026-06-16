@@ -1,0 +1,171 @@
+<view class="page">
+  <scroll-view class="main-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+    <view class="card-section">
+      <view wx:if="{{todayCard}}">
+        <view class="card summary-card">
+          <view class="card-label">
+            <text>◇ 拢 · {{todayFragments.length}} 条碎片</text>
+            <view class="tone-dot" style="background:{{toneColors[todayCard.summary.tone]}}"></view>
+          </view>
+          <view class="theme-text">{{todayCard.summary.theme}}</view>
+          <view class="overview-text">{{todayCard.summary.overview}}</view>
+        </view>
+
+        <view class="card-divider">
+          <view class="divider-line"></view>
+          <text class="divider-label">{{todayCard.refraction.perspective}}</text>
+          <view class="divider-line"></view>
+        </view>
+
+        <view class="card refraction-card">
+          <view class="card-label">
+            <text>◇ 放 · 折射</text>
+            <view class="tone-dot" style="background:{{toneColors[todayCard.refraction.tone]}}"></view>
+          </view>
+          <view class="mirror-note" wx:if="{{todayCard.refraction.whyThis}}">
+            <text class="mirror-icon">◇</text>
+            <text>为什么是这面镜子：{{todayCard.refraction.whyThis}}</text>
+          </view>
+          <view class="theme-text">{{todayCard.refraction.theme}}</view>
+          <view class="insight-text">{{todayCard.refraction.insight}}</view>
+        </view>
+
+        <button class="btn-gen" bindtap="generateTodayCard" disabled="{{generating}}">
+          {{generating ? '生成中...' : '◇ 重新折光'}}
+        </button>
+      </view>
+
+      <view wx:if="{{!todayCard}}">
+        <view class="gen-hint-standalone" wx:if="{{todayFragments.length > 0}}">{{todayFragments.length}} 条碎片可生成折光</view>
+        <button class="btn-gen" bindtap="generateTodayCard" disabled="{{generating}}">
+          {{generating ? '生成中...' : '◇ 生成折光'}}
+        </button>
+      </view>
+
+      <view class="empty" wx:if="{{!todayCard && !generating && todayFragments.length === 0}}">
+        <view class="empty-icon">◇</view>
+        <view class="empty-main">片刻成光</view>
+        <view class="empty-sub">按住唱片说话，轻触选择记录方式</view>
+      </view>
+
+      <view class="play-bar" wx:if="{{lastVoicePath}}" bindtap="playVoice" data-path="{{lastVoicePath}}">
+        <text class="play-bar-dot"></text>
+        <text>刚才录的语音</text>
+        <text class="play-bar-btn">▶</text>
+      </view>
+    </view>
+
+    <view class="frag-collapse" wx:if="{{todayFragments.length > 0}}">
+      <text bindtap="openCalendar">查看日历 · {{todayFragments.length}} 条碎片 ▸</text>
+      <text class="frag-arrow" bindtap="goToShard">每日折光 ›</text>
+    </view>
+
+  </scroll-view>
+
+  <!-- ===== VINYL — the one entry point ===== -->
+  <view class="vinyl-stage">
+    <view class="vinyl-hero {{recording ? 'recording' : ''}}" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd" bindtap="onVinylTap">
+      <view class="vinyl-hero-disc">
+        <view class="vinyl-label-area">
+          <view class="prism-mark">
+            <view class="prism-beam"></view>
+            <view class="prism-tri"></view>
+            <view class="prism-spectrum">
+              <view class="prism-ray r1"></view>
+              <view class="prism-ray r2"></view>
+              <view class="prism-ray r3"></view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="vinyl-shine"></view>
+    </view>
+
+    <view class="vinyl-hint" wx:if="{{!recording}}">
+      <text>长按唱片开始录音 · 轻触写字</text>
+    </view>
+    <view class="vinyl-hint recording-hint" wx:if="{{recording}}">
+      <text>正在录音...轻触唱片停止</text>
+    </view>
+  </view>
+
+  <!-- Text input modal (appears when user taps "文字") -->
+  <view class="text-overlay" wx:if="{{showTextInput}}" bindtap="closeTextInput">
+    <view class="text-sheet" catchtap="" style="margin-bottom:{{keyboardHeight}}px">
+      <view class="text-sheet-header">
+        <text class="text-sheet-title">写一段碎片</text>
+        <text class="text-sheet-close" bindtap="closeTextInput">✕</text>
+      </view>
+      <textarea class="text-sheet-area" value="{{inputText}}" placeholder="此刻的想法..." bindinput="onInput" maxlength="2000" auto-height focus="{{showTextInput}}" adjust-position="{{true}}" cursor-spacing="160" bindkeyboardheightchange="onKeyboardHeightChange"/>
+      <view class="text-sheet-footer">
+        <view class="text-sheet-import" catchtap="onImportTap">+</view>
+        <button class="text-sheet-btn" bindtap="submitText" disabled="{{inputText === ''}}">存入折光</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- Calendar overlay -->
+  <view class="cal-overlay" wx:if="{{showCalendar}}">
+    <view class="cal-container">
+      <view class="cal-header">
+        <text class="cal-close" bindtap="closeCalendar">✕</text>
+        <view class="cal-month-nav">
+          <text class="cal-nav-arrow" bindtap="calPrevMonth">‹</text>
+          <text class="cal-month-label">{{calYear}}年{{calMonth}}月</text>
+          <text class="cal-nav-arrow" bindtap="calNextMonth">›</text>
+        </view>
+        <view style="width:48rpx;"></view>
+      </view>
+
+      <view class="cal-weekdays">
+        <text class="cal-wd">日</text><text class="cal-wd">一</text><text class="cal-wd">二</text>
+        <text class="cal-wd">三</text><text class="cal-wd">四</text><text class="cal-wd">五</text><text class="cal-wd">六</text>
+      </view>
+
+      <view class="cal-grid">
+        <view wx:for="{{calWeeks}}" wx:key="index" class="cal-row">
+          <block wx:for="{{item}}" wx:key="day" wx:for-item="dayCell">
+            <view wx:if="{{dayCell}}" class="cal-day {{dayCell.isToday ? 'cal-today' : ''}} {{dayCell.date === calSelectedDate ? 'cal-selected' : ''}}" data-date="{{dayCell.date}}" bindtap="calSelectDate">
+              <text class="cal-day-num">{{dayCell.day}}</text>
+              <view wx:if="{{dayCell.hasData}}" class="cal-dot" style="background:{{toneColors[dayCell.tone] || '#8C8275'}};opacity:{{dayCell.dotOpacity}};width:{{dayCell.dotSize}}rpx;height:{{dayCell.dotSize}}rpx;"></view>
+            </view>
+            <view wx:if="{{!dayCell}}" class="cal-day cal-empty"></view>
+          </block>
+        </view>
+      </view>
+
+      <scroll-view class="cal-frags-scroll" scroll-y enhanced show-scrollbar="{{false}}">
+        <view class="cal-frags-header">
+          <text>{{calSelectedDate === todayStr ? '今天' : calSelectedDate}}</text>
+          <text class="cal-frags-count"> · {{calFragments.length}} 条碎片</text>
+        </view>
+        <view wx:if="{{calCard}}" class="cal-card-preview" bindtap="goToShardDate" data-date="{{calSelectedDate}}">
+          <view wx:if="{{calCard.summary}}" class="cal-card-mini">
+            <text class="cal-card-tone" style="color:{{toneColors[calCard.summary.tone]}};">◇ 拢</text>
+            <text class="cal-card-theme">{{calCard.summary.theme}}</text>
+          </view>
+          <view wx:if="{{calCard.refraction}}" class="cal-card-mini">
+            <text class="cal-card-tone" style="color:{{toneColors[calCard.refraction.tone]}};">◇ 放 · {{calCard.refraction.perspective}}</text>
+            <text class="cal-card-theme">{{calCard.refraction.theme}}</text>
+          </view>
+        </view>
+        <view wx:for="{{calFragments}}" wx:key="id" class="frag-item">
+          <view class="frag-meta">
+            <view class="frag-dot {{item.source === 'jsonl' ? 'ai' : (item.source === 'voice' ? 'voice' : 'self')}}"></view>
+            <text class="frag-time">{{item.timestamp ? item.timestamp.slice(11,16) : ''}}</text>
+          </view>
+          <view class="frag-body">
+            <image wx:if="{{item.source === 'image' && item.imagePath}}" src="{{item.imagePath}}" mode="aspectFill" class="frag-thumb"></image>
+            <text wx:if="{{item.source !== 'image' || !item.imagePath}}">{{item.content}}</text>
+          </view>
+          <view class="frag-actions">
+            <text class="frag-play" wx:if="{{item.source === 'voice' && item.audioPath}}" bindtap="playVoice" data-path="{{item.audioPath}}">▶</text>
+          </view>
+        </view>
+        <view class="cal-frags-empty" wx:if="{{calFragments.length === 0}}">
+          <text>这一天没有碎片</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

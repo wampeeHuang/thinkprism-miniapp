@@ -1,0 +1,62 @@
+<view class="container">
+  <!-- Day Navigator -->
+  <view class="day-nav">
+    <button bindtap="prevDay">&lsaquo;</button>
+    <view class="nav-date">{{displayDate}}</view>
+    <button bindtap="nextDay" disabled="{{isToday}}">&rsaquo;</button>
+  </view>
+
+  <!-- Card Display -->
+  <view wx:if="{{card}}">
+    <!-- Summary Card -->
+    <view class="card">
+      <view class="card-label">
+        <text>◇ 拢 · {{dayFragments.length}} 条碎片</text>
+        <view class="tone-dot" style="background:{{toneColors[card.summary.tone]}}"></view>
+      </view>
+      <view class="theme-text">{{card.summary.theme}}</view>
+      <view class="overview-text">{{card.summary.overview}}</view>
+    </view>
+
+    <!-- Divider -->
+    <view class="card-divider">
+      <view class="divider-line"></view>
+      <text class="divider-label">{{card.refraction.perspective}}</text>
+      <view class="divider-line"></view>
+    </view>
+
+    <!-- Refraction Card -->
+    <view class="card">
+      <view class="card-label">
+        <text>◇ 放 · 折射</text>
+        <view class="tone-dot" style="background:{{toneColors[card.refraction.tone]}}"></view>
+      </view>
+      <view class="mirror-note" wx:if="{{card.refraction.whyThis}}">
+        <text class="mirror-icon">◇</text>
+        <text>为什么是这面镜子：{{card.refraction.whyThis}}</text>
+      </view>
+      <view class="theme-text">{{card.refraction.theme}}</view>
+      <view class="insight-text">{{card.refraction.insight}}</view>
+      <view style="font-size:22rpx;color:var(--muted);margin-top:16rpx;">
+        生成于 {{card.generated_at ? card.generated_at.slice(0,10) + ' ' + card.generated_at.slice(11,19) : ''}}
+      </view>
+    </view>
+  </view>
+
+  <!-- Generate / Regenerate -->
+  <view wx:if="{{!generating}}" class="btn-row">
+    <button class="btn btn-sage" bindtap="generateCardForDay">{{card ? '重新生成' : '为此日生成卡片'}}</button>
+  </view>
+
+  <!-- Generating State -->
+  <view wx:if="{{generating}}" class="gen-steps">
+    <text class="gen-step active">正在生成卡片...</text>
+  </view>
+
+  <!-- Empty State -->
+  <view class="empty" wx:if="{{!card && dayFragments.length === 0 && !generating}}">
+    <view class="icon">◇</view>
+    <view class="main">这一天是空的</view>
+    <view class="sub">没有碎片记录</view>
+  </view>
+</view>

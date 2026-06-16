@@ -1,0 +1,313 @@
+page { overflow-x: hidden; padding-bottom: 0; }
+
+.main-scroll { height: calc(100vh - 290rpx); padding: 0 28rpx 0; box-sizing: border-box; }
+
+/* ---- Cards (de-boxed) ---- */
+.card-section { margin: 20rpx 0 0; }
+.summary-card { border-left: none; box-shadow: none; background: rgba(255,255,255,0.5); }
+.refraction-card { border-left: none; box-shadow: none; background: rgba(255,255,255,0.3); }
+
+.overview-text {
+  font-size: 28rpx; line-height: 1.7; color: var(--ink-soft);
+  margin-bottom: 20rpx; padding: 16rpx 20rpx;
+  background: rgba(242,238,223,0.6); border-radius: 12rpx;
+}
+.insight-text { font-size: 28rpx; line-height: 1.7; color: var(--ink); margin-bottom: 16rpx; }
+
+.card-divider {
+  display: flex; align-items: center; margin: 16rpx 0; padding: 0 20rpx;
+}
+.divider-line { flex: 1; height: 1rpx; background: linear-gradient(to right, transparent, var(--lilac), transparent); }
+.divider-label {
+  font-size: 20rpx; color: var(--lilac); letter-spacing: 0.12em;
+  white-space: nowrap; margin: 0 20rpx;
+}
+
+.btn-gen {
+  display: block; margin: 24rpx auto;
+  padding: 14rpx 40rpx; border-radius: 32rpx; font-size: 26rpx;
+  border: 1rpx solid var(--sage); background: transparent; color: var(--sage);
+  text-align: center;
+}
+.btn-gen[disabled] { opacity: 0.4; border-color: var(--border); color: var(--muted); }
+.gen-hint-standalone {
+  text-align: center; font-size: 24rpx; color: var(--muted); margin: 32rpx 0 8rpx;
+}
+
+.empty { text-align: center; padding: 80rpx 40rpx 40rpx; color: var(--muted); }
+.empty-icon { font-size: 64rpx; margin-bottom: 20rpx; }
+.empty-main { font-size: 34rpx; color: var(--ink); margin-bottom: 12rpx; }
+.empty-sub { font-size: 26rpx; line-height: 1.7; }
+
+/* ---- Last voice play bar ---- */
+.play-bar {
+  display: flex; align-items: center; gap: 10rpx;
+  padding: 14rpx 20rpx; margin-top: 20rpx;
+  background: rgba(224,122,95,0.08); border-radius: 14rpx;
+  font-size: 24rpx; color: var(--pink);
+}
+.play-bar-dot {
+  width: 12rpx; height: 12rpx; border-radius: 50%;
+  background: var(--pink); flex-shrink: 0;
+}
+.play-bar-btn {
+  margin-left: auto; font-size: 22rpx;
+  padding: 4rpx 16rpx; border: 1rpx solid var(--pink);
+  border-radius: 16rpx;
+}
+
+/* ---- Fragments bar ---- */
+.frag-collapse {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18rpx 24rpx; margin: 0;
+  background: rgba(0,0,0,0.03); border-radius: 16rpx;
+  font-size: 24rpx; color: var(--muted);
+}
+.frag-arrow { font-size: 22rpx; color: var(--muted); }
+
+/* ============================================
+   VINYL — textured record + prism logo
+   ============================================ */
+.vinyl-stage {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 56rpx 0 40rpx;
+}
+
+.vinyl-hero {
+  width: 140rpx; height: 140rpx; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+}
+
+.vinyl-hero-disc {
+  width: 140rpx; height: 140rpx; border-radius: 50%;
+  background:
+    radial-gradient(circle, #1a1a1a 120rpx, #222 121rpx, #222 124rpx, #1a1a1a 125rpx, #1a1a1a 127rpx, #2a2a2a 128rpx, #1a1a1a 130rpx, #222 132rpx, #1a1a1a 134rpx, #111 140rpx),
+    repeating-radial-gradient(circle at center,
+      #1a1a1a 0rpx, #1a1a1a 2rpx,
+      #1e1e1e 2rpx, #1e1e1e 3rpx,
+      #1a1a1a 3rpx, #1a1a1a 5rpx,
+      #222 5rpx, #222 6rpx,
+      #1a1a1a 6rpx, #1a1a1a 8rpx,
+      #1c1c1c 8rpx, #1c1c1c 9rpx,
+      #1a1a1a 9rpx, #1a1a1a 11rpx,
+      #242424 11rpx, #242424 12rpx
+    );
+  box-shadow:
+    0 0 0 4rpx #555,
+    0 0 0 14rpx #1a1a1a,
+    0 0 0 16rpx #666,
+    0 0 0 18rpx #111,
+    0 4rpx 24rpx rgba(0,0,0,0.25);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1;
+}
+
+.vinyl-shine {
+  position: absolute; top: -6rpx; left: 10%;
+  width: 80%; height: 48%; border-radius: 50%;
+  background: radial-gradient(ellipse at center,
+    rgba(255,255,255,0.08) 0%,
+    rgba(255,255,255,0.03) 40%,
+    transparent 70%);
+  pointer-events: none; z-index: 3;
+}
+
+/* Label — spectrum gradient (pink→lilac, the refraction colors) */
+.vinyl-label-area {
+  width: 48rpx; height: 48rpx; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #E07A5F 0rpx, #d47360 10rpx, #c97c6a 18rpx, #9A8FB5 36rpx);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
+  box-shadow: 0 0 8rpx rgba(224,122,95,0.25), 0 0 16rpx rgba(154,143,181,0.15);
+}
+
+/* ---- Prism refraction logo ---- */
+.prism-mark {
+  width: 30rpx; height: 16rpx; position: relative;
+  display: flex; align-items: center;
+}
+/* Incoming light beam */
+.prism-beam {
+  width: 6rpx; height: 2rpx;
+  background: rgba(255,255,255,0.85);
+  border-radius: 1rpx;
+  flex-shrink: 0;
+}
+/* Prism triangle */
+.prism-tri {
+  width: 0; height: 0;
+  border-top: 6rpx solid transparent;
+  border-bottom: 6rpx solid transparent;
+  border-left: 10rpx solid rgba(255,255,255,0.92);
+  margin: 0 1rpx;
+}
+/* Refracted spectrum rays */
+.prism-spectrum {
+  display: flex; flex-direction: column;
+  margin-left: 2rpx;
+}
+.prism-ray {
+  height: 2rpx; border-radius: 1rpx;
+  margin-bottom: 1rpx;
+}
+.prism-ray.r1 { width: 12rpx; background: #F2CC8F; }
+.prism-ray.r2 { width: 8rpx; background: #E6B89C; margin-left: 2rpx; }
+.prism-ray.r3 { width: 6rpx; background: #9A8FB5; margin-left: 3rpx; }
+
+/* --- Recording state --- */
+.vinyl-hero.recording .vinyl-hero-disc {
+  animation: spin 2s linear infinite;
+}
+.vinyl-hero.recording .vinyl-label-area {
+  background: radial-gradient(circle at 40% 40%, #e04040 0rpx, #d03030 15rpx, #b02050 30rpx, #7a3080 42rpx);
+  box-shadow: 0 0 18rpx rgba(224,64,64,0.7);
+}
+.vinyl-hero.recording .prism-beam,
+.vinyl-hero.recording .prism-tri,
+.vinyl-hero.recording .prism-ray {
+  animation: pulsePrism 0.8s ease-in-out infinite;
+}
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes pulsePrism {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+
+.vinyl-hint {
+  margin-top: 28rpx; font-size: 22rpx;
+  color: var(--muted); letter-spacing: 0.08em;
+}
+.vinyl-hint.recording-hint { color: var(--pink); }
+
+/* ============================================
+   Text input overlay
+   ============================================ */
+.text-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 200;
+  background: rgba(0,0,0,0.4);
+  max-width: 750rpx; margin: 0 auto;
+  display: flex; align-items: flex-end;
+}
+.text-sheet {
+  width: 100%; background: #fff;
+  border-radius: 24rpx 24rpx 0 0;
+  padding: 32rpx 28rpx 40rpx;
+  box-shadow: 0 -4rpx 24rpx rgba(0,0,0,0.1);
+}
+.text-sheet-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+.text-sheet-title { font-size: 30rpx; color: var(--ink); font-weight: 600; }
+.text-sheet-close {
+  font-size: 32rpx; color: var(--muted);
+  width: 48rpx; text-align: center; line-height: 48rpx;
+}
+.text-sheet-area {
+  width: 100%; min-height: 200rpx;
+  padding: 20rpx; border-radius: 12rpx;
+  background: #F5F2EB; font-size: 28rpx; line-height: 1.7;
+  color: var(--ink); box-sizing: border-box;
+}
+.text-sheet-footer {
+  display: flex; align-items: center; justify-content: space-between; margin-top: 20rpx;
+}
+.text-sheet-import {
+  width: 72rpx; height: 72rpx; border-radius: 50%;
+  border: 1rpx solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 36rpx; color: var(--muted);
+  background: #fff;
+}
+.text-sheet-btn {
+  padding: 14rpx 32rpx; border-radius: 24rpx; font-size: 26rpx;
+  background: var(--sage); color: #fff; border: none;
+}
+.text-sheet-btn[disabled] { opacity: 0.4; }
+
+/* ============================================
+   Calendar overlay
+   ============================================ */
+.cal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100;
+  background: var(--paper);
+  max-width: 750rpx; margin: 0 auto;
+  display: flex; flex-direction: column;
+}
+.cal-container {
+  flex: 1; display: flex; flex-direction: column;
+  padding: 0 28rpx; overflow: hidden;
+}
+.cal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20rpx 0 16rpx;
+}
+.cal-close {
+  font-size: 36rpx; color: var(--muted); width: 48rpx;
+  text-align: center; line-height: 48rpx;
+}
+.cal-month-nav { display: flex; align-items: center; }
+.cal-nav-arrow {
+  font-size: 48rpx; color: var(--ink-soft);
+  width: 56rpx; text-align: center; line-height: 56rpx;
+}
+.cal-month-label {
+  font-size: 32rpx; color: var(--ink); font-weight: 600;
+  min-width: 240rpx; text-align: center;
+}
+.cal-weekdays { display: flex; padding: 12rpx 0; border-bottom: 1rpx solid var(--border); }
+.cal-wd { flex: 1; text-align: center; font-size: 22rpx; color: var(--muted); padding: 8rpx 0; }
+.cal-grid { padding: 12rpx 0 16rpx; }
+.cal-row { display: flex; }
+.cal-day {
+  flex: 1; position: relative; height: 90rpx;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  border-radius: 12rpx;
+}
+.cal-day-num { font-size: 26rpx; color: var(--ink-soft); position: relative; z-index: 1; }
+.cal-dot { border-radius: 50%; margin-top: 4rpx; position: relative; z-index: 1; }
+.cal-empty { background: transparent; }
+.cal-today .cal-day-num { color: var(--ink); font-weight: 700; }
+.cal-today { border: 2rpx solid rgba(42,36,27,0.35); }
+.cal-selected { background: rgba(42,36,27,0.06); }
+.cal-selected .cal-day-num { color: var(--ink); font-weight: 600; }
+
+.cal-frags-scroll { flex: 1; overflow: hidden; border-top: 1rpx solid var(--border); }
+.cal-frags-header {
+  display: flex; align-items: baseline;
+  padding: 24rpx 0 16rpx; font-size: 28rpx; color: var(--ink);
+}
+.cal-frags-count { font-size: 22rpx; color: var(--muted); margin-left: 4rpx; }
+.cal-frags-empty { text-align: center; padding: 60rpx 0; font-size: 26rpx; color: var(--muted); }
+.cal-card-preview { margin-bottom: 16rpx; border-radius: 10rpx; }
+.cal-card-preview:active { background: rgba(42,36,27,0.04); }
+.cal-card-mini {
+  display: flex; align-items: baseline;
+  padding: 10rpx 16rpx; margin-bottom: 8rpx;
+  background: rgba(0,0,0,0.02); border-radius: 10rpx;
+}
+.cal-card-tone { font-size: 22rpx; white-space: nowrap; margin-right: 12rpx; }
+.cal-card-theme { font-size: 24rpx; color: var(--ink-soft); }
+
+/* Fragment items */
+.frag-item {
+  display: flex; padding: 16rpx 0;
+  border-bottom: 1rpx solid var(--border); align-items: flex-start;
+}
+.frag-meta { display: flex; align-items: center; flex-shrink: 0; margin-top: 6rpx; margin-right: 16rpx; }
+.frag-dot { width: 14rpx; height: 14rpx; border-radius: 50%; margin-right: 8rpx; }
+.frag-dot.ai { background: var(--lilac); }
+.frag-dot.self { background: var(--sage); }
+.frag-dot.voice { background: var(--pink); }
+.frag-time { font-size: 20rpx; color: var(--muted); white-space: nowrap; }
+.frag-body {
+  flex: 1; font-size: 26rpx; line-height: 1.6; color: var(--ink-soft);
+  min-width: 0; word-break: break-word; margin-right: 16rpx;
+}
+.frag-thumb { width: 60rpx; height: 60rpx; border-radius: 8rpx; flex-shrink: 0; }
+.frag-actions { flex-shrink: 0; }
+.frag-play {
+  font-size: 22rpx; color: var(--pink); padding: 4rpx 12rpx;
+  border: 1rpx solid var(--border); border-radius: 16rpx;
+}

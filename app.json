@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/record/record",
+    "pages/shard/shard",
+    "pages/trace/trace"
+  ],
+  "window": {
+    "backgroundColor": "#F2EEDF",
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F2EEDF",
+    "navigationBarTitleText": "折光",
+    "navigationBarTextStyle": "black"
+  },
+  "permission": {
+    "scope.record": {
+      "desc": "用于录制语音碎片，记录你的声音想法"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
