@@ -1,16 +1,21 @@
-const SB_URL = 'https://ycdaykjjqnuvqfjeatjm.supabase.co';
-const SB_KEY = 'sb_publishable_XU5d4E_nQl55raQlYReyVA_Smhcd3PC';
+function getConfig() {
+  return {
+    url: wx.getStorageSync('thinkprism_sbUrl') || '',
+    key: wx.getStorageSync('thinkprism_sbKey') || ''
+  };
+}
 
 function sbHeaders() {
+  var cfg = getConfig();
   return {
     'Content-Type': 'application/json',
-    'apikey': SB_KEY,
-    'Authorization': 'Bearer ' + SB_KEY
+    'apikey': cfg.key,
+    'Authorization': 'Bearer ' + cfg.key
   };
 }
 
 function query(fragment, opts) {
-  var url = SB_URL + '/rest/v1/' + fragment + '?' + opts;
+  var url = getConfig().url + '/rest/v1/' + fragment + '?' + opts;
   return new Promise(function(resolve, reject) {
     wx.request({
       url: url, method: 'GET', header: sbHeaders(), timeout: 15000,
@@ -23,7 +28,7 @@ function query(fragment, opts) {
 function insert(table, data) {
   return new Promise(function(resolve, reject) {
     wx.request({
-      url: SB_URL + '/rest/v1/' + table,
+      url: getConfig().url + '/rest/v1/' + table,
       method: 'POST',
       header: Object.assign({}, sbHeaders(), { Prefer: 'resolution=merge-duplicates' }),
       data: data,
